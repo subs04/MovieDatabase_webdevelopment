@@ -1,50 +1,32 @@
+function MovieCard(props) {
+  let badgeColor = "";
 
-function MovieCard() {
+  if (props.rating >= 8) {
+    badgeColor = "green";
+  } else if (props.rating >= 5) {
+    badgeColor = "orange";
+  } else {
+    badgeColor = "red";
+  }
+
   return (
-    <div style={styles.card}>
-      <div style={styles.poster}>
-        Poster
-      </div>
+    <div className="card">
+      <div className="poster">Poster</div>
 
-      <h2>Avengers: Endgame</h2>
+      <h2>{props.title}</h2>
 
-      <p>Genre: Action</p>
+      <p><b>Genre:</b> {props.genre}</p>
 
-      <p>Year: 2019</p>
+      <p><b>Year:</b> {props.year}</p>
 
-      <span style={styles.rating}>
-        ⭐ 8.4
+      <span
+        className="rating"
+        style={{ backgroundColor: badgeColor }}
+      >
+        ⭐ {props.rating}
       </span>
     </div>
   );
 }
-
-const styles = {
-  card: {
-    width: "220px",
-    border: "1px solid gray",
-    borderRadius: "10px",
-    padding: "15px",
-    textAlign: "center",
-    fontFamily: "Arial",
-  },
-
-  poster: {
-    height: "250px",
-    backgroundColor: "#ddd",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "8px",
-    marginBottom: "10px",
-  },
-
-  rating: {
-    backgroundColor: "gold",
-    padding: "5px 10px",
-    borderRadius: "20px",
-    fontWeight: "bold",
-  },
-};
 
 export default MovieCard;
