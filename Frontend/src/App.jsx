@@ -158,12 +158,24 @@ function App() {
   toggleWatchlist={toggleWatchlist}
   watchlist={watchlist}
 />
+ {watchlist.length > 0 && (
+
+  <Section
+    title="My Watchlist"
+    movies={watchlist}
+    setSelectedMovie={setSelectedMovie}
+    toggleWatchlist={toggleWatchlist}
+    watchlist={watchlist}
+  />
+
+)}
 
         {selectedMovie && (
 
-          <MovieDetail
-            movie={selectedMovie}
-          />
+        <MovieDetail
+    movie={selectedMovie}
+    setSelectedMovie={setSelectedMovie}
+/>
 
         )}
 
