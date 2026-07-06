@@ -152,12 +152,12 @@ function App() {
         <AddMovieForm addMovie={addMovie} />
 
         <Section
-          title="Movies"
-          movies={filteredMovies}
-          setSelectedMovie={setSelectedMovie}
-          toggleWatchlist={toggleWatchlist}
-          watchlist={watchlist}
-        />
+  title="Movies"
+  movies={filteredMovies}
+  setSelectedMovie={setSelectedMovie}
+  toggleWatchlist={toggleWatchlist}
+  watchlist={watchlist}
+/>
 
         {selectedMovie && (
 
