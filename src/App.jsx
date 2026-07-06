@@ -1,11 +1,13 @@
-import MovieCard from "./components/MovieCard";
+import Navbar from "./Navbar";
+import MovieGrid from "./MovieGrid";
+import "./index.css";
 
 function App() {
   return (
     <div>
-      <h1>My Movies</h1>
+      <Navbar />
 
-      <MovieCard />
+      <MovieGrid />
     </div>
   );
 }
