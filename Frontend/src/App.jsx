@@ -7,63 +7,7 @@ import AddMovieForm from "./components/AddMovieForm";
 function App() {
 
   // Movie State
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "Avengers Endgame",
-      genre: "Action",
-      year: 2019,
-      director: "Anthony Russo",
-      rating: 8.5,
-      synopsis: "The Avengers assemble one final time to defeat Thanos.",
-      cast: ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson"],
-      image: "https://picsum.photos/250/350?1"
-    },
-    {
-      id: 2,
-      title: "Batman",
-      genre: "Action",
-      year: 2022,
-      director: "Matt Reeves",
-      rating: 7.9,
-      synopsis: "Batman investigates corruption in Gotham City.",
-      cast: ["Robert Pattinson", "Zoë Kravitz"],
-      image: "https://picsum.photos/250/350?2"
-    },
-    {
-      id: 3,
-      title: "Interstellar",
-      genre: "Sci-Fi",
-      year: 2014,
-      director: "Christopher Nolan",
-      rating: 8.7,
-      synopsis: "Explorers travel through a wormhole in space.",
-      cast: ["Matthew McConaughey", "Anne Hathaway"],
-      image: "https://picsum.photos/250/350?3"
-    },
-    {
-      id: 4,
-      title: "Titanic",
-      genre: "Romance",
-      year: 1997,
-      director: "James Cameron",
-      rating: 7.8,
-      synopsis: "A love story aboard the Titanic.",
-      cast: ["Leonardo DiCaprio", "Kate Winslet"],
-      image: "https://picsum.photos/250/350?4"
-    },
-    {
-      id: 5,
-      title: "Joker",
-      genre: "Drama",
-      year: 2019,
-      director: "Todd Phillips",
-      rating: 8.4,
-      synopsis: "Arthur Fleck becomes the Joker.",
-      cast: ["Joaquin Phoenix"],
-      image: "https://picsum.photos/250/350?5"
-    }
-  ]);
+  const [movies, setMovies] = useState([]);
 
   // Selected Movie
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -77,6 +21,25 @@ function App() {
   // Dashboard
   const [totalMovies, setTotalMovies] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
+
+  useEffect(() => {
+    async function fetchMovies() {
+      try {
+        const response = await fetch("http://localhost:3000/movies");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch movies");
+        }
+
+        const data = await response.json();
+        setMovies(data);
+      } catch (error) {
+        console.error("Failed to load movies:", error);
+      }
+    }
+
+    fetchMovies();
+  }, []);
 
   // Dashboard calculation
   useEffect(() => {
@@ -96,10 +59,27 @@ function App() {
   }, [movies]);
 
   // Add Movie
-  function addMovie(movie) {
+  async function addMovie(movie) {
+    try {
+      const response = await fetch("http://localhost:3000/movies", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(movie)
+      });
 
-    setMovies([...movies, movie]);
+      const result = await response.json();
 
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to add movie");
+      }
+
+      setMovies([...movies, result.movie]);
+    } catch (error) {
+      console.error("Failed to add movie:", error);
+      alert(error.message);
+    }
   }
 
   // Watchlist

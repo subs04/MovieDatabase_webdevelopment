@@ -1,4 +1,6 @@
 function MovieDetail({ movie, setSelectedMovie }) {
+  const castList = Array.isArray(movie.cast) ? movie.cast : [];
+
   return (
     <div className="mt-10 bg-slate-800 rounded-2xl p-6 shadow-lg relative">
 
@@ -18,7 +20,7 @@ function MovieDetail({ movie, setSelectedMovie }) {
 
         <div>
           <img
-            src={movie.image}
+            src={movie.image || "https://picsum.photos/250/350?fallback"}
             alt={movie.title}
             className="rounded-xl w-full object-cover"
           />
@@ -59,9 +61,13 @@ function MovieDetail({ movie, setSelectedMovie }) {
           </h3>
 
           <ul className="list-disc ml-6 mt-2 text-gray-300">
-            {movie.cast.map((actor, index) => (
-              <li key={index}>{actor}</li>
-            ))}
+            {castList.length > 0 ? (
+              castList.map((actor, index) => (
+                <li key={index}>{actor}</li>
+              ))
+            ) : (
+              <li>No cast information available.</li>
+            )}
           </ul>
 
         </div>

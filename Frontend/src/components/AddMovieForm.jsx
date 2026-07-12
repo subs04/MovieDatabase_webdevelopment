@@ -3,6 +3,16 @@ import { useState } from "react";
 function AddMovieForm({ addMovie }) {
 
   const [title, setTitle] = useState("");
+
+  function getStableImageUrl(movieTitle) {
+    const slug = movieTitle
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+    return `https://picsum.photos/seed/${slug || "movie"}/250/350`;
+  }
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [director, setDirector] = useState("");
@@ -34,7 +44,7 @@ function AddMovieForm({ addMovie }) {
       rating: Number(rating),
       synopsis,
       cast: ["Unknown Cast"],
-      image: `https://picsum.photos/250/350?random=${Date.now()}`
+      image: getStableImageUrl(title)
     };
 
     addMovie(newMovie);
