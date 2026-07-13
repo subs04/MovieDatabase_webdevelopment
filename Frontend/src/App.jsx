@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch("http://localhost:3000/movies");
+        const response = await fetch("http://localhost:3000/api/movies");
 
         if (!response.ok) {
           throw new Error("Failed to fetch movies");
@@ -61,7 +61,7 @@ function App() {
   // Add Movie
   async function addMovie(movie) {
     try {
-      const response = await fetch("http://localhost:3000/movies", {
+      const response = await fetch("http://localhost:3000/api/movies", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
