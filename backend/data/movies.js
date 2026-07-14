@@ -1,6 +1,11 @@
+import mongoose from "mongoose";
+import movie from "./movie.js";
+import dotenv from "dotenv";
+dotenv.config({path: '.env'});
+
 const movies = [
   {
-    id: 1,
+  
     title: "Avengers Endgame",
     genre: "Action",
     year: 2019,
@@ -10,7 +15,7 @@ const movies = [
     cast: ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson"]
   },
   {
-    id: 2,
+  
     title: "Batman",
     genre: "Action",
     year: 2022,
@@ -20,7 +25,7 @@ const movies = [
     cast: ["Robert Pattinson", "Zoë Kravitz"]
   },
   {
-    id: 3,
+    
     title: "Interstellar",
     genre: "Sci-Fi",
     year: 2014,
@@ -30,7 +35,7 @@ const movies = [
     cast: ["Matthew McConaughey", "Anne Hathaway"]
   },
   {
-    id: 4,
+   
     title: "Titanic",
     genre: "Romance",
     year: 1997,
@@ -40,7 +45,7 @@ const movies = [
     cast: ["Leonardo DiCaprio", "Kate Winslet"]
   },
   {
-    id: 5,
+  
     title: "Joker",
     genre: "Drama",
     year: 2019,
@@ -50,5 +55,7 @@ const movies = [
     cast: ["Joaquin Phoenix"]
   }
 ];
-
-module.exports = movies;
+const connection = mongoose.connect(process.env.MONGODB_URI,{});
+await movie.deleteMany();
+await movie.insertMany(movies);
+export default movies;
