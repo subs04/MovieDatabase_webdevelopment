@@ -1,30 +1,44 @@
-import moongose from "mongoose";
+import mongoose from "mongoose";
 
-const movieSchema =moongose.Schema(
+const movieSchema = mongoose.Schema(
     {
         title:{ 
             type: String,
-            required: true },
+            required: true, 
+            trim: true
+        },
+        
         genre:{ 
             type: String, 
-            required: true },
+            required: true,
+            trim: true
+        },
         year: { 
             type: Number, 
-            required: true },
+            required: true,
+            trim: true
+         },
         director: { 
             type: String, 
-            required: true },
+            required: true,
+            trim: true
+        },
         synopsis: {
              type: String, 
-             required: true },
+             required: true,
+             trim: true
+         },
         rating: { 
             type: Number, 
-            required: true },
+            required: true,
+            trim: true},
         cast: { 
             type: [String], 
-            required: true }
+            required: true,
+            trim: true
+        }
     });
 
-  const Movie = moongose.model("Movie", movieSchema);
+  const Movie = mongoose.model("Movie", movieSchema);
 
   export default Movie;  

@@ -55,7 +55,18 @@ const movies = [
     cast: ["Joaquin Phoenix"]
   }
 ];
-const connection = mongoose.connect(process.env.MONGODB_URI,{});
-await movie.deleteMany();
-await movie.insertMany(movies);
+// Seed database on module load
+const seedDatabase = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    await movie.deleteMany({});
+    await movie.insertMany(movies);
+    console.log(" Database seeded with movies");
+  } catch (error) {
+    console.error(" Error seeding database:", error.message);
+  }
+};
+
+seedDatabase();
+
 export default movies;

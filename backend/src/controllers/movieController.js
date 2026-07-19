@@ -1,26 +1,88 @@
-import MovieModel from '../models/movieModel.js';
+import MovieModel from "../models/movieModel.js";
 
-export const getAllMovies = (req, res) => {
-  const movies = MovieModel.getAll();
-  return res.status(200).json(movies);
+// GET ALL MOVIES
+export const getAllMovies = async (req, res) => {
+  try {
+    const movies = await MovieModel.getAll();
+
+    return res.status(200).json(movies);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
-export const getMovieById = (req, res) => {
-  const id = Number(req.params.id);
-  const movie = MovieModel.getById(id);
-  if (!movie) return res.status(404).json({ message: 'Movie not found' });
-  return res.status(200).json(movie);
+// GET MOVIE BY OBJECT ID
+export const getMovieById = async (req, res) => {
+  try {
+    const movie = await MovieModel.getById(req.params.id);
+
+    if (!movie) {
+      return res.status(404).json({
+        message: "Movie not found",
+      });
+    }
+
+    return res.status(200).json(movie);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
-export const createMovie = (req, res) => {
-  const { title, genre, year, director, synopsis, rating, cast, image } = req.body;
-  const newMovie = MovieModel.create({ title, genre, year, director, synopsis, rating, cast, image });
-  return res.status(201).json({ message: 'Movie added successfully', movie: newMovie });
+// CREATE MOVIE
+export const createMovie = async (req, res) => {
+  try {
+    const {
+      title,
+      genre,
+      year,
+      director,
+      synopsis,
+      rating,
+      cast,
+    } = req.body;
+
+    const newMovie = await MovieModel.create({
+      title,
+      genre,
+      year,
+      director,
+      synopsis,
+      rating,
+      cast,
+    });
+
+    return res.status(201).json({
+      message: "Movie added successfully",
+      movie: newMovie,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
 };
 
-export const deleteMovie = (req, res) => {
-  const id = Number(req.params.id);
-  const ok = MovieModel.removeById(id);
-  if (!ok) return res.status(404).json({ message: 'Movie not found' });
-  return res.status(204).send();
+// DELETE MOVIE BY OBJECT ID
+export const deleteMovie = async (req, res) => {
+  try {
+    const movie = await MovieModel.removeById(req.params.id);
+
+    if (!movie) {
+      return res.status(404).json({
+        message: "Movie not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Movie deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
 };
