@@ -2,12 +2,23 @@ import Movie from "../../data/movie.js";
 
 // Get all movies
 async function getAll(filter = {}) {
-  return await Movie.find(filter);
+  const movies = await Movie.find(filter);
+  return movies.map(movie => ({
+    ...movie.toObject(),
+    id: movie._id,
+    image: movie.image || `https://picsum.photos/seed/${(movie.title || "movie").toLowerCase().replace(/[^a-z0-9]+/g, "-")}/250/350`
+  }));
 }
 
 // Get one movie by MongoDB ObjectId
 async function getById(id) {
-  return await Movie.findById(id);
+  const movie = await Movie.findById(id);
+  if (!movie) return null;
+  return {
+    ...movie.toObject(),
+    id: movie._id,
+    image: movie.image || `https://picsum.photos/seed/${(movie.title || "movie").toLowerCase().replace(/[^a-z0-9]+/g, "-")}/250/350`
+  };
 }
 
 // Create a new movie
@@ -20,9 +31,15 @@ async function create(data) {
     synopsis: data.synopsis,
     rating: data.rating,
     cast: data.cast,
+    image: data.image || null
   });
 
-  return await newMovie.save();
+  const savedMovie = await newMovie.save();
+  return {
+    ...savedMovie.toObject(),
+    id: savedMovie._id,
+    image: savedMovie.image || `https://picsum.photos/seed/${(savedMovie.title || "movie").toLowerCase().replace(/[^a-z0-9]+/g, "-")}/250/350`
+  };
 }
 
 // Delete movie by ObjectId

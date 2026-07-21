@@ -8,6 +8,7 @@ const movieRules = [
   body('synopsis').trim().notEmpty().withMessage('Synopsis is required'),
   body('rating').notEmpty().withMessage('Rating is required').isNumeric().withMessage('Rating must be a number between 0 and 10'),
   body('cast').notEmpty().withMessage('Cast is required').isArray({ min: 1 }).withMessage('Cast must be an array with at least one member'),
+  body('image').optional().isString().withMessage('Image must be a string'),
 ];
 
 const validate = (req, res, next) => {
